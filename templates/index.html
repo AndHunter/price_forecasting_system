@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction System</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        form {
+            margin: 20px 0;
+        }
+        label {
+            font-size: 1.2em;
+            margin: 10px;
+        }
+        input[type="number"], input[type="file"] {
+            padding: 10px;
+            font-size: 1.2em;
+            margin: 10px;
+        }
+        input[type="submit"], button {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            margin: 20px;
+            background-color: #1E90FF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: #4169E1;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        a {
+            color: #1E90FF;
+            font-size: 1.2em;
+            margin: 10px 0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prediction Parameters</h1>
+    <form method="post" enctype="multipart/form-data" style="text-align: center;">
+        <label>Upload CSV: <input type="file" name="file"></label><br>
+        <label>n_estimators: <input type="number" name="n_estimators" value="100" min="10" max="500"></label><br>
+        <label>max_depth: <input type="number" name="max_depth" value="10" min="5" max="30"></label><br>
+        <label>n_jobs: <input type="number" name="n_jobs" value="3" min="1" max="10"></label><br>
+        <input type="submit" value="Run Prediction">
+    </form>
+    {% if graph_60s %}
+        <h2>60s Prediction</h2>
+        <div>{{ graph_60s|safe }}</div>
+        <a href="/download/{{ log_60s }}" download>Download 60s Log</a>
+        <button onclick="window.open('/logs/{{ log_60s }}', '_blank')">Open 60s Log</button>
+    {% endif %}
+    {% if graph_3600s %}
+        <h2>3600s Prediction</h2>
+        <div>{{ graph_3600s|safe }}</div>
+        <a href="/download/{{ log_3600s }}" download>Download 3600s Log</a>
+        <button onclick="window.open('/logs/{{ log_3600s }}', '_blank')">Open 3600s Log</button>
+    {% endif %}
+</body>
+</html>
